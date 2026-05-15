@@ -44,40 +44,24 @@ html, body, [class*="css"] {
     background-color: #F2EDE3 !important;
     color: #0A2015 !important;
 }
-/* Force all text elements to be fully visible */
-p, span, div, label, li, a, td, th,
-.stMarkdown, .stMarkdown p, .stMarkdown span,
-[data-testid="stMarkdownContainer"],
-[data-testid="stMarkdownContainer"] p,
-[data-testid="stMarkdownContainer"] span {
-    color: #0A2015 !important;
-    opacity: 1 !important;
-}
-/* Checkbox and radio labels */
-.stCheckbox label, .stRadio label,
-.stCheckbox span, .stRadio span {
-    color: #0A2015 !important;
-    opacity: 1 !important;
-}
-/* Override any faded/muted text */
-[data-testid="stText"],
-.stText { color: #0A2015 !important; opacity: 1 !important; }
-/* Target every Streamlit wrapper to enforce beige */
-[data-testid="stApp"],
-.stApp,
-section.main,
-.main,
-[data-testid="stHeader"],
-[data-testid="stToolbar"],
-[data-testid="stBottom"],
-[data-testid="stDecoration"],
-.block-container,
-.main .block-container {
+
+/* ── Background enforcement ── */
+[data-testid="stApp"], .stApp, section.main, .main,
+[data-testid="stHeader"], [data-testid="stToolbar"],
+[data-testid="stBottom"], [data-testid="stDecoration"],
+.block-container, .main .block-container {
     background-color: #F2EDE3 !important;
 }
-.main .block-container {
-    padding-top: 2rem;
-    max-width: 1300px;
+.main .block-container { padding-top: 2rem; max-width: 1300px; }
+
+/* ── Body text — targeted only, avoids dark-bg elements ── */
+.stMarkdown p, .stMarkdown li, .stMarkdown strong, .stMarkdown em,
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] strong,
+[data-testid="stMarkdownContainer"] em {
+    color: #0A2015 !important;
+    opacity: 1 !important;
 }
 
 /* ── Sidebar ── */
@@ -98,9 +82,9 @@ h1 { font-size: 2.4rem !important; font-weight: 500 !important; }
 h2 { font-size: 1.7rem !important; font-weight: 500 !important; }
 h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
 
-/* ── Buttons ── */
+/* ── Buttons — green at rest, darker on hover ── */
 .stButton > button {
-    background-color: #0A2015 !important;
+    background-color: #235A42 !important;
     color: #F2EDE3 !important;
     border: none !important;
     border-radius: 5px !important;
@@ -111,7 +95,10 @@ h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
     padding: 0.55rem 1.4rem !important;
     transition: background 0.2s !important;
 }
-.stButton > button:hover { background-color: #235A42 !important; }
+.stButton > button:hover { background-color: #0A2015 !important; }
+/* Ensure button text stays cream regardless of global overrides */
+.stButton > button p,
+.stButton > button span { color: #F2EDE3 !important; }
 
 /* ── Tabs ── */
 .stTabs [data-baseweb="tab-list"] {
@@ -134,6 +121,10 @@ h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
     background-color: #0A2015 !important;
     color: #F2EDE3 !important;
 }
+/* Ensure selected tab label text stays cream */
+.stTabs [aria-selected="true"] p,
+.stTabs [aria-selected="true"] span,
+.stTabs [aria-selected="true"] div { color: #F2EDE3 !important; }
 
 /* ── Metric cards ── */
 [data-testid="stMetric"] {
@@ -171,6 +162,16 @@ h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
     font-family: 'Space Grotesk', sans-serif !important;
 }
 
+/* ── Widget labels (number inputs, selects, toggles, text areas) ── */
+[data-testid="stWidgetLabel"] p,
+[data-testid="stWidgetLabel"] span,
+.stTextInput label p, .stTextArea label p,
+.stNumberInput label p, .stSelectbox label p,
+.stToggle label p {
+    color: #0A2015 !important;
+    opacity: 1 !important;
+}
+
 /* ── Sliders ── */
 .stSlider > div > div > div { background-color: #235A42 !important; }
 
@@ -183,12 +184,14 @@ h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
     border: 1px solid #D5CEC0 !important;
     border-radius: 7px !important;
 }
+[data-testid="stExpander"] summary p,
+[data-testid="stExpander"] summary span { color: #0A2015 !important; }
 
-/* ── Phase pill ── */
+/* ── Phase pill (dark bg + light text — uses inline color, not overridden) ── */
 .phase-pill {
     display: inline-block;
     background-color: #0A2015;
-    color: #B8D4A0;
+    color: #B8D4A0 !important;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.70rem;
     font-weight: 600;
@@ -211,21 +214,24 @@ h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
     background-color: #E8F0E8 !important;
     border-left: 3px solid #235A42 !important;
     border-radius: 6px !important;
-    color: #0A2015 !important;
 }
+[data-testid="stInfo"] p { color: #0A2015 !important; }
 [data-testid="stWarning"] {
     background-color: #FEF8EC !important;
     border-left: 3px solid #B8860B !important;
 }
+[data-testid="stWarning"] p { color: #5A4000 !important; }
 
-/* ── Radio/checkbox labels ── */
-.stRadio label, .stCheckbox label {
+/* ── Radio / checkbox labels ── */
+.stRadio label, .stCheckbox label,
+.stRadio p, .stCheckbox p {
     font-family: 'Space Grotesk', sans-serif !important;
     color: #0A2015 !important;
+    opacity: 1 !important;
 }
 
 /* ── Caption / small text ── */
-.stCaption, small {
+.stCaption p, small {
     color: #6B7C6A !important;
     font-family: 'Space Grotesk', sans-serif !important;
 }
@@ -365,17 +371,23 @@ def style_statement(
         .apply_index(index_style, axis=0)
         .set_table_styles([
             {"selector": "thead th",
-             "props": "background-color: #0A2015; color: #F2EDE3; "
-                      "font-family: 'Space Grotesk', sans-serif; "
+             "props": "background-color: #0A2015 !important; color: #F2EDE3 !important; "
+                      "font-family: 'Space Grotesk', sans-serif !important; "
                       "font-weight: 500; font-size: 0.82rem; "
                       "text-transform: uppercase; letter-spacing: 0.05em; "
                       "padding: 8px 12px; border: none;"},
             {"selector": "tbody td",
-             "props": "padding: 6px 12px;"},
+             "props": "padding: 6px 12px; color: #2A3D2E !important; "
+                      "background-color: #FAFAF7 !important;"},
+            {"selector": "tbody tr:nth-child(even) td",
+             "props": "background-color: #F5F0E8 !important;"},
             {"selector": "tbody th",
-             "props": "padding: 6px 12px; text-align: left;"},
+             "props": "padding: 6px 12px; text-align: left; color: #2A3D2E !important; "
+                      "background-color: #FAFAF7 !important;"},
+            {"selector": "tbody tr:nth-child(even) th",
+             "props": "background-color: #F5F0E8 !important;"},
             {"selector": "table",
-             "props": "border-collapse: collapse; width: 100%;"},
+             "props": "border-collapse: collapse; width: 100%; background-color: #FAFAF7 !important;"},
         ])
     )
     return styler
