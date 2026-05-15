@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Mac
+.DS_Store
+
+# Database (ephemeral on Streamlit Cloud — auto-recreated on first run)
+data/thesis.db
+data/*.db
+
+# Streamlit secrets (if ever added)
+.streamlit/secrets.toml
+
+# Virtual environments
+.venv/
+venv/
+env/
