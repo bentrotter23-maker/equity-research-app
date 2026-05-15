@@ -73,7 +73,7 @@ html, body, [class*="css"] {
 [data-testid="stSidebar"] hr  { border-color: #235A42 !important; }
 
 /* ── Headers ── */
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', serif !important;
     color: #0A2015 !important;
     letter-spacing: -0.01em !important;
@@ -81,6 +81,8 @@ h1, h2, h3 {
 h1 { font-size: 2.4rem !important; font-weight: 500 !important; }
 h2 { font-size: 1.7rem !important; font-weight: 500 !important; }
 h3 { font-size: 1.2rem !important; font-weight: 500 !important; }
+h4 { font-size: 1.05rem !important; font-weight: 500 !important; }
+h5, h6 { font-size: 0.95rem !important; font-weight: 500 !important; }
 
 /* ── Buttons — green at rest, darker on hover ── */
 .stButton > button {
@@ -411,7 +413,7 @@ PLOTLY_LAYOUT = dict(
     plot_bgcolor="#FAFAF7",
     font=dict(family="Space Grotesk", color=GREEN),
     legend=dict(bgcolor=CREAM, bordercolor="#CECCBC", borderwidth=1,
-                font=dict(family="Space Grotesk", size=12)),
+                font=dict(family="Space Grotesk", size=12, color=GREEN)),
     colorway=[GREEN, MID_GREEN, AMBER, LIGHT_GREEN, "#8B6914", "#9DC09A"],
 )
 # When a chart needs a title, apply it explicitly via fig.update_layout(title=dict(text=..., font=...))
@@ -1360,10 +1362,23 @@ elif st.session_state.phase == 2:
                                 styles.at["CCC (days)", col] = existing + ";color:#B8000B;font-weight:600;"
                     return styles
 
-                st.dataframe(
-                    fmt_eff.style.apply(_eff_styler, axis=None),
-                    use_container_width=True,
+                styled_eff = (
+                    fmt_eff.style
+                    .apply(_eff_styler, axis=None)
+                    .set_table_styles([
+                        {"selector": "table",
+                         "props": "width:100%;border-collapse:collapse;font-family:'Space Grotesk',sans-serif;font-size:0.83rem;"},
+                        {"selector": "thead th",
+                         "props": "background-color:#0A2015 !important;color:#F2EDE3 !important;padding:7px 12px;text-align:center;font-weight:600;"},
+                        {"selector": "tbody th",
+                         "props": "background-color:#ECE7DA;color:#0A2015;padding:6px 12px;font-weight:500;text-align:left;border-bottom:1px solid #D5CEC0;"},
+                        {"selector": "tbody td",
+                         "props": "background-color:#FAFAF7;color:#0A2015;padding:6px 12px;text-align:center;border-bottom:1px solid #E8E4DC;"},
+                        {"selector": "tbody tr:hover td",
+                         "props": "background-color:#F2EDE3;"},
+                    ])
                 )
+                st.markdown(styled_eff.to_html(), unsafe_allow_html=True)
             else:
                 st.info("Efficiency metrics not available for this company.")
 
