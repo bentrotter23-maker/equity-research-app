@@ -44,6 +44,24 @@ html, body, [class*="css"] {
     background-color: #F2EDE3 !important;
     color: #0A2015 !important;
 }
+/* Force all text elements to be fully visible */
+p, span, div, label, li, a, td, th,
+.stMarkdown, .stMarkdown p, .stMarkdown span,
+[data-testid="stMarkdownContainer"],
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] span {
+    color: #0A2015 !important;
+    opacity: 1 !important;
+}
+/* Checkbox and radio labels */
+.stCheckbox label, .stRadio label,
+.stCheckbox span, .stRadio span {
+    color: #0A2015 !important;
+    opacity: 1 !important;
+}
+/* Override any faded/muted text */
+[data-testid="stText"],
+.stText { color: #0A2015 !important; opacity: 1 !important; }
 /* Target every Streamlit wrapper to enforce beige */
 [data-testid="stApp"],
 .stApp,
@@ -542,7 +560,6 @@ def _generate_questions(a: dict, goals: list) -> list:
 
 with st.sidebar:
     st.markdown("## Equity Research")
-    st.markdown("*Applied Equity Valuation*")
     st.markdown("---")
 
     if st.session_state.analysis:
